@@ -28,11 +28,7 @@ body {
   @apply text-black dark:text-white !important;
 }
 .heroFromInputBg {
-  @apply bg-white dark:bg-myDark-100 border 
-  dark:border-black/40 dark:ring-offset-1
-  placeholder:text-slate-500 focus:outline-none focus:ring-0 
-  focus:ring-transparent focus:ring-offset-2 
-  dark:ring-offset-transparent !important;
+  @apply bg-white dark:bg-myDark-100 border dark:border-black/40 dark:ring-offset-1 placeholder:text-slate-500 focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-2 dark:ring-offset-transparent !important;
 }
 .cardBg {
   @apply bg-white dark:bg-myDark-100 !important;
@@ -54,4 +50,3 @@ body {
 .serviceBg {
   @apply bg-myLight-100 dark:bg-myDark-100 !important;
 }
-
