@@ -1,10 +1,13 @@
+"use client";
 import React from "react";
-import SectionBg from "../_components/SectionBg";
-import HomeAboutUs from "../_components/Sections/HomeAboutUs";
-import AboutLogo from "../_components/Sections/AboutLogo";
-import AboutVision from "../_components/Sections/AboutVision";
-import AboutPerson from "../_components/Sections/AboutPerson";
-import Testiomonials from "../_components/Sections/Testiomonials";
+import dynamic from "next/dynamic";
+
+const SectionBg = dynamic(() => import("../_components/SectionBg"), {ssr: false});
+const HomeAboutUs = dynamic(() => import("../_components/Sections/HomeAboutUs"), {ssr: false});
+const AboutLogo = dynamic(() => import("../_components/Sections/AboutLogo"), {ssr: false});
+const AboutVision = dynamic(() => import("../_components/Sections/AboutVision"), {ssr: false});
+const AboutPerson = dynamic(() => import("../_components/Sections/AboutPerson"), {ssr: false});
+const Testiomonials = dynamic(() => import("../_components/Sections/Testiomonials"), {ssr: false});
 
 const AboutUs = () => {
   return (

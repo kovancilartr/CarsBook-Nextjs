@@ -54,4 +54,9 @@ body {
 .serviceBg {
   @apply bg-myLight-100 dark:bg-myDark-100 !important;
 }
-
+.filterBg {
+  @apply bg-stone-50 text-black dark:bg-mysecondary dark:text-white border dark:border-slate-600 !important;
+}
+.filterBg:hover {
+  @apply bg-stone-100 text-black dark:bg-mysecondary dark:text-white border dark:border-slate-600 !important;
+}
