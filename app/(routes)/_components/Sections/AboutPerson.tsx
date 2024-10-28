@@ -1,22 +1,56 @@
-import React from "react";
+"use client";
+import React, { useEffect, useRef } from "react";
 import SectionTitle from "../SectionTitle";
 import Image from "next/image";
 import ButtonArrow from "../ButtonArrow";
 import { Button } from "@/components/ui/button";
 import { personData } from "@/constans";
 import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import anime from "animejs/lib/anime.es.js";
 
 const AboutPerson = () => {
+  const personRef = useRef<HTMLParagraphElement | null>(null);
+
+  useEffect(() => {
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          anime({
+            targets: personRef.current?.querySelectorAll(".person-animated"),
+            opacity: [0, 1],
+            translateY: [50, 0],
+            duration: 1000,
+            easing: "easeOutQuad",
+            delay: anime.stagger(200),
+          });
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: 0.1,
+    });
+
+    if (personRef.current) {
+      observer.observe(personRef.current);
+    }
+
+    return () => {
+      if (personRef.current) {
+        observer.unobserve(personRef.current);
+      }
+    };
+  }, []);
   return (
     <div className="relative px-4 md:px-16 rounded-4xl my-12">
       <div className="absolute inset-0 bg-center bg-no-repeat bg-service-bg opacity-10 pointer-events-none"></div>
-      <div className="serviceBg rounded-4xl pt-2 pb-20">
+      <div className="serviceBg rounded-4xl pt-2 pb-20" ref={personRef}>
         <SectionTitle title="Our Person" titleTwo="We offer the best persons" />
         <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {personData.map((person, index) => (
             <div
               key={index}
-              className="rounded-3xl group overflow-hidden relative"
+              className="rounded-3xl group overflow-hidden relative person-animated"
             >
               <Image
                 alt=""

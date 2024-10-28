@@ -1,11 +1,60 @@
-import React from "react";
+"use client";
+import React, { useEffect, useRef } from "react";
 import SectionTitle from "../SectionTitle";
 import { blogData } from "@/constans";
 import Image from "next/image";
 import { Calendar } from "lucide-react";
 import ButtonArrow from "../ButtonArrow";
+import anime from "animejs/lib/anime.es.js";
 
 const HomeArticle = () => {
+  const leftArticleRef = useRef<HTMLParagraphElement | null>(null);
+  const rightArticleRef = useRef<HTMLParagraphElement | null>(null);
+
+  useEffect(() => {
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          anime({
+            targets: leftArticleRef.current?.querySelectorAll(
+              ".left-article-animated"
+            ),
+            opacity: [0, 1],
+            translateY: [10, 0],
+            duration: 3000,
+            easing: "easeOutQuad",
+            delay: anime.stagger(200),
+          });
+          anime({
+            targets: rightArticleRef.current?.querySelectorAll(
+              ".right-article-animated"
+            ),
+            opacity: [0, 1],
+            translateY: [50, 0],
+            duration: 1000,
+            easing: "easeOutQuad",
+            delay: anime.stagger(200),
+          });
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: 0.1,
+    });
+
+    if (leftArticleRef.current && rightArticleRef.current) {
+      observer.observe(leftArticleRef.current);
+      observer.observe(leftArticleRef.current);
+    }
+
+    return () => {
+      if (leftArticleRef.current && rightArticleRef.current) {
+        observer.unobserve(rightArticleRef.current);
+        observer.unobserve(rightArticleRef.current);
+      }
+    };
+  }, []);
   return (
     <div className="container mx-auto mb-20 px-4">
       <SectionTitle
@@ -14,11 +63,14 @@ const HomeArticle = () => {
       />
 
       <div className="flex flex-col lg:flex-row items-center justify-center gap-8">
-        <div className="w-full lg:w-3/5 relative group mb-8 lg:mb-0">
+        <div
+          className="w-full lg:w-3/5 relative group mb-8 lg:mb-0"
+          ref={leftArticleRef}
+        >
           {blogData.slice(0, 1).map((blog, index) => (
             <div
               key={index}
-              className="relative overflow-hidden rounded-3xl w-full h-full lg:h-[678px]"
+              className="relative overflow-hidden rounded-3xl w-full h-full lg:h-[678px] left-article-animated"
             >
               <Image
                 alt={blog.title}
@@ -43,11 +95,11 @@ const HomeArticle = () => {
           ))}
         </div>
 
-        <div className="w-full lg:w-2/5 space-y-8">
+        <div className="w-full lg:w-2/5 space-y-8" ref={rightArticleRef}>
           {blogData.slice(1, 4).map((blog, index) => (
             <div
               key={index}
-              className="relative group flex flex-row md:flex-row gap-4"
+              className="relative group flex flex-row md:flex-row gap-4 right-article-animated"
             >
               <div className="relative w-full md:w-1/2 rounded-3xl overflow-hidden h-[204px]">
                 <Image
